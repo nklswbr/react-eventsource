@@ -1,1 +1,1 @@
-export { useSSE, type UseSSEOptions, type UseSSEResult } from "./use-eventsource";
+export { useSSE, type UseSSEOptions, type UseSSEResult } from "./use-sse";
