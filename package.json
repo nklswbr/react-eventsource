@@ -1,0 +1,50 @@
+{
+  "name": "react-eventsource",
+  "version": "2.0.0",
+  "description": "React hook for Server-Sent Events with custom headers support, built on @microsoft/fetch-event-source",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nklswbr/react-eventsource"
+  },
+  "keywords": [
+    "React",
+    "hook",
+    "EventSource",
+    "server",
+    "Server-sent events",
+    "SSE",
+    "Streaming"
+  ],
+  "dependencies": {
+    "@microsoft/fetch-event-source": "^2.0.1"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.9",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
