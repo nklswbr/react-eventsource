@@ -1,4 +1,4 @@
-# react-eventsource
+# React EventSource
 
 > React hook for Server-Sent Events with custom headers support
 
