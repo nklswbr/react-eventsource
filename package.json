@@ -1,6 +1,6 @@
 {
   "name": "react-eventsource",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "React hook for Server-Sent Events with custom headers support, built on @microsoft/fetch-event-source",
   "license": "MIT",
   "type": "module",
