@@ -10,6 +10,7 @@ export interface UseSSEOptions {
   onOpen?: (response: Response) => void;
   onError?: (error: unknown) => void;
   fetch?: typeof window.fetch;
+  openWhenHidden?: boolean;
 }
 
 export interface UseSSEResult {
@@ -19,7 +20,7 @@ export interface UseSSEResult {
 }
 
 export function useSSE(options: UseSSEOptions): UseSSEResult {
-  const { url, headers, method, body, onMessage, onOpen, onError, fetch: customFetch } = options;
+  const { url, headers, method, body, onMessage, onOpen, onError, fetch: customFetch, openWhenHidden } = options;
   const [readyState, setReadyState] = useState(0);
   const controllerRef = useRef<AbortController | null>(null);
 
@@ -39,6 +40,7 @@ export function useSSE(options: UseSSEOptions): UseSSEResult {
       body: body,
       signal: controller.signal,
       fetch: customFetch,
+      openWhenHidden: openWhenHidden ?? true,
       
       async onopen(response) {
         setReadyState(1);

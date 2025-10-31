@@ -55,16 +55,17 @@ function ServerUpdates() {
 
 #### Options
 
-| Property    | Type                                      | Required | Description                           |
-|-------------|-------------------------------------------|----------|---------------------------------------|
-| `url`       | `string`                                  | Yes      | Server-Sent Events endpoint URL       |
-| `headers`   | `Record<string, string>`                  | No       | Custom headers (auth, API keys, etc.) |
-| `method`    | `string`                                  | No       | HTTP method (defaults to 'GET')       |
-| `body`      | `string \| FormData`                      | No       | Request body (rarely needed for SSE)  |
-| `onMessage` | `(message: EventSourceMessage) => void`  | No       | Message event handler                 |
-| `onOpen`    | `(response: Response) => void`            | No       | Connection open handler               |
-| `onError`   | `(error: unknown) => void`                | No       | Error handler                         |
-| `fetch`     | `typeof window.fetch`                     | No       | Custom fetch implementation           |
+| Property         | Type                                      | Required | Description                                                           |
+|------------------|-------------------------------------------|----------|-----------------------------------------------------------------------|
+| `url`            | `string`                                  | Yes      | Server-Sent Events endpoint URL                                       |
+| `headers`        | `Record<string, string>`                  | No       | Custom headers (auth, API keys, etc.)                                 |
+| `method`         | `string`                                  | No       | HTTP method (defaults to 'GET')                                       |
+| `body`           | `string \| FormData`                      | No       | Request body (rarely needed for SSE)                                  |
+| `onMessage`      | `(message: EventSourceMessage) => void`  | No       | Message event handler                                                 |
+| `onOpen`         | `(response: Response) => void`            | No       | Connection open handler                                               |
+| `onError`        | `(error: unknown) => void`                | No       | Error handler                                                         |
+| `fetch`          | `typeof window.fetch`                     | No       | Custom fetch implementation                                           |
+| `openWhenHidden` | `boolean`                                 | No       | Keep connection open when page is hidden (defaults to `true`)         |
 
 #### Return Values
 
@@ -157,6 +158,30 @@ function ChatStream() {
   )
 }
 ```
+
+### Page Visibility Behavior
+
+By default, this hook keeps SSE connections open even when the browser tab/window is hidden (minimized, switched away, etc.). This matches the behavior of the native `EventSource` API.
+
+If you want to **close the connection** when the page is hidden and automatically reconnect when visible again (to reduce server load), set `openWhenHidden` to `false`:
+
+```tsx
+useSSE({
+  url: '/api/events',
+  openWhenHidden: false,  // Close connection when page is hidden
+  onMessage: (msg) => console.log(msg.data)
+})
+```
+
+**When to use `openWhenHidden: false`:**
+- You want to reduce server load by closing idle connections
+- Your app doesn't need real-time updates when the user isn't viewing the page
+- You're implementing a background sync that should pause when hidden
+
+**When to keep the default (`true`):**
+- You need continuous updates regardless of page visibility
+- You're building a real-time monitoring dashboard
+- Missing events while hidden would cause data inconsistency
 
 ## Why This Hook?
 
